@@ -7,6 +7,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'ReusableCard.dart';
 import 'icon_content.dart';
 import 'constants.dart';
+import 'results_page.dart';
 
 
 
@@ -26,6 +27,7 @@ class _InputPageState extends State<InputPage> {
   Gender selectedGender;
   int height = 180;
   int weight = 60;
+  int age = 21;
 
   @override
   Widget build(BuildContext context) {
@@ -115,16 +117,19 @@ class _InputPageState extends State<InputPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      FloatingActionButton(
-                        backgroundColor: Color(0xFF4C45FE),
-                        child: Icon(Icons.add,color: Colors.white,),
-                        
-                      ),
+                      RoundIconButton(icon: FontAwesomeIcons.minus,
+                      onPress: (){
+                        setState(() {
+                          weight--;
+                        });
+                      },),
                       SizedBox(width: 10.0,),
-                      FloatingActionButton(
-                        backgroundColor: Color(0xFF4C45FE),
-                        child: Icon(Icons.remove, color:Colors.white),
-                      ),
+                      RoundIconButton(icon: FontAwesomeIcons.plus,
+                      onPress: (){
+                        setState(() {
+                         weight++;
+                        });
+                      },),
 
                     ],
                   ),
@@ -135,17 +140,53 @@ class _InputPageState extends State<InputPage> {
 
                )
               ,),
-            Expanded(child: ReusableCard(color: kActiveCardColor,),),
+            Expanded(child: ReusableCard(color: kActiveCardColor,
+            cardChild: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('AGE', style: kLabelTextStyle,),
+              Text(age.toString(), style: kNumberTextStyle,),
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                  RoundIconButton(icon: FontAwesomeIcons.minus,
+                    onPress: (){
+                      setState(() {
+                        age--;
+                    });
+                    },),
+                  SizedBox(width: 10.0,),
+                    RoundIconButton(icon: FontAwesomeIcons.plus,
+                      onPress: (){
+                      setState(() {
+                      age++;
+                    });
+              },),
+
+              ],
+              ),
+
+
+              ],
+              ),
+
+            ),),
           ],
 
-        )),
+        ),),
 
-        Container(
-          color: kBottomBarColor,
-          margin: EdgeInsets.only(top: 10.0),
-          width: double.infinity,
-          height: kBottomBarHeight,
+        GestureDetector(
+          onTap: (){
+            Navigator.push(context,MaterialPageRoute(builder: (context) => ResultsPage()));
+          },
+          child: Container(
+            child: Text('Calculate'),
+            color: kBottomBarColor,
+            margin: EdgeInsets.only(top: 10.0),
+            width: double.infinity,
+            height: kBottomBarHeight,
 
+          ),
         )
       ],
 
@@ -153,6 +194,35 @@ class _InputPageState extends State<InputPage> {
     );
   }
 }
+
+class RoundIconButton extends StatelessWidget {
+
+  RoundIconButton({@required this.icon,@required this.onPress});
+
+  final IconData icon;
+  final Function onPress;
+
+
+  @override
+  Widget build(BuildContext context) {
+    return RawMaterialButton(
+      onPressed: onPress,
+      elevation: 6.0,
+      constraints: BoxConstraints.tightFor(
+        height: 56,
+        width: 56,
+      ),
+     shape: CircleBorder(),
+      fillColor: Color(0xFF4C45FE),
+      child: Icon(icon, color: Colors.white,),
+
+
+
+
+    );
+  }
+}
+
 
 
 
