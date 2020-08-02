@@ -8,6 +8,7 @@ import 'ReusableCard.dart';
 import 'icon_content.dart';
 import 'constants.dart';
 import 'results_page.dart';
+import 'Bottom_Button.dart';
 
 
 
@@ -175,25 +176,17 @@ class _InputPageState extends State<InputPage> {
 
         ),),
 
-        GestureDetector(
-          onTap: (){
-            Navigator.push(context,MaterialPageRoute(builder: (context) => ResultsPage()));
-          },
-          child: Container(
-            child: Text('Calculate'),
-            color: kBottomBarColor,
-            margin: EdgeInsets.only(top: 10.0),
-            width: double.infinity,
-            height: kBottomBarHeight,
-
-          ),
-        )
+        BottomButton(buttonTitle: "Calculate", onTap: (){
+          Navigator.push(context, MaterialPageRoute(builder: (context) => ResultsPage(),),);
+        },)
       ],
 
       ),
     );
   }
 }
+
+
 
 class RoundIconButton extends StatelessWidget {
 
